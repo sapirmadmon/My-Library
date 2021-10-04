@@ -4,7 +4,7 @@ const status = require("statuses");
 const User = require("../models/User");
 
 //update user
-router.put("/user/update/:id", async(req, res) => {
+router.put("/api/user/update/:id", async(req, res) => {
     if (req.body.userId == req.params.id) {
         //update password
         if (req.body.password) {
@@ -31,7 +31,7 @@ router.put("/user/update/:id", async(req, res) => {
 });
 
 //delete user
-router.delete("/user/delete/:id", async(req, res) => {
+router.delete("/api/user/delete/:id", async(req, res) => {
     if (req.body.userId == req.params.id) {
         try {
             const user = await User.findByIdAndDelete(req.params.id);
@@ -46,10 +46,12 @@ router.delete("/user/delete/:id", async(req, res) => {
 });
 
 //get a user
-router.get("/user/:id", async(req, res) => {
+router.get("/api/user/:id", async(req, res) => {
     try {
         const user = await User.findById(req.params.id);
         const { password, updatedAt, ...other } = user._doc;
+        res.header("Access-Control-Allow-Origin", "*");
+
         res.status(200).json(other);
     } catch (err) {
         res.status(500).json(err);
@@ -57,7 +59,7 @@ router.get("/user/:id", async(req, res) => {
 });
 
 //follow after user
-router.put("/user/:id/follow", async(req, res) => {
+router.put("/api/user/:id/follow", async(req, res) => {
     if (req.body.userId !== req.params.id) {
         try {
             const user = await User.findById(req.params.id); //Who I want to follow
@@ -85,7 +87,7 @@ router.put("/user/:id/follow", async(req, res) => {
 });
 
 //unfollow a user
-router.put("/user/:id/unfollow", async(req, res) => {
+router.put("/api/user/:id/unfollow", async(req, res) => {
     if (req.body.userId !== req.params.id) {
         try {
             const user = await User.findById(req.params.id); //Who I want to unfollow

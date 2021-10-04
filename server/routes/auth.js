@@ -3,7 +3,7 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt"); //A library to help you hash passwords
 
 //register user
-router.post("/register", async(req, res) => {
+router.post("/api/register", async(req, res) => {
     try {
         //generate new password
         const salt = await bcrypt.genSalt(10);
@@ -26,7 +26,7 @@ router.post("/register", async(req, res) => {
 });
 
 //login user
-router.post("/login", async(req, res) => {
+router.post("/api/login", async(req, res) => {
     try {
         const user = await User.findOne({ email: req.body.email });
         if (!user) {

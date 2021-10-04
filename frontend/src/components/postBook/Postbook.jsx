@@ -1,9 +1,27 @@
 import "./postbook.css";
+import { format } from "timeago.js";
+
 import { MoreVert } from "@mui/icons-material";
-import { useState } from "react";
-export default function Postbook() {
-  const [like, setLike] = useState(0); //(post.like)
+import { useState, useEffect } from "react";
+import axios from "axios";
+export default function Postbook({ postBook }) {
+  const [like, setLike] = useState(postBook.likes.length);
   const [isLiked, setIsLiked] = useState(false);
+  const [user, setUser] = useState({});
+
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await axios.get(
+        `http://localhost:8800/api/user/${postBook.userId}`
+      );
+      console.log(res);
+      setUser(res.data);
+    };
+    fetchUser();
+  }, [postBook.userId]);
+
   const likeHandler = () => {
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
@@ -15,31 +33,31 @@ export default function Postbook() {
           <div className="postBookTopLeft">
             <img
               className="postBookProfileImg"
-              src="/assets/person/1.jpeg"
+              src={user.profilePicture || PF + "/person/noAvatar.png"}
               alt=""
             />
-            <span className="postBookUsername">my name</span>
-            <span className="postBookDate">5 mins ago</span>
+            <span className="postBookUsername">{user.userName}</span>
+            <span className="postBookDate">{format(postBook.createdAt)}</span>
           </div>
           <div className="postBookTopRight">
             <MoreVert></MoreVert>
           </div>
         </div>
         <div className="postBookCenter">
-          <span className="postBookText">hey its my first book </span>
-          <img className="bookImg" src="assets/books/book1.jpg" alt="" />
+          {/*<span className="postBookText">hey its my first book </span>*/}
+          <img className="bookImg" src={PF + postBook.img} alt="" />
         </div>
         <div className="postBookBottom">
           <div className="postBookBottomLeft">
             <img
               className="likeIcon"
-              src="assets/like.png"
+              src={PF + "like.png"}
               onClick={likeHandler}
               alt=""
             />
             <img
               className="likeIcon"
-              src="assets/heart.png"
+              src={PF + "heart.png"}
               onClick={likeHandler}
               alt=""
             />

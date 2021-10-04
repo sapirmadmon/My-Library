@@ -10,5 +10,7 @@
     justify-content: left;
 }
 
-
-/*.feedWrapper {}*/
+.postsBookDiv {
+    display: flex;
+    flex-direction: row;
+}

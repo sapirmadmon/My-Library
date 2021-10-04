@@ -3,7 +3,7 @@ const Book = require("../models/Book");
 const User = require("../models/User");
 
 //create book
-router.post("/book/create", async(req, res) => {
+router.post("/api/book/create", async(req, res) => {
     const newBook = new Book(req.body);
     try {
         const saveBook = await newBook.save();
@@ -14,7 +14,7 @@ router.post("/book/create", async(req, res) => {
 });
 
 //update book
-router.put("/book/update/:id", async(req, res) => {
+router.put("/api/book/update/:id", async(req, res) => {
     try {
         const book = await Book.findById(req.params.id);
         if (book.userId === req.body.userId) {
@@ -31,7 +31,7 @@ router.put("/book/update/:id", async(req, res) => {
 });
 
 //delete book
-router.delete("/book/delete/:id", async(req, res) => {
+router.delete("/api/book/delete/:id", async(req, res) => {
     try {
         const book = await Book.findById(req.params.id);
         if (book.userId === req.body.userId) {
@@ -48,7 +48,7 @@ router.delete("/book/delete/:id", async(req, res) => {
 });
 
 //like/dislike book
-router.put("/book/:id/like", async(req, res) => {
+router.put("/api/book/:id/like", async(req, res) => {
     try {
         const book = await Book.findById(req.params.id);
         if (!book.likes.includes(req.body.userId)) {
@@ -64,7 +64,7 @@ router.put("/book/:id/like", async(req, res) => {
 });
 
 //get book
-router.get("/book/:id", async(req, res) => {
+router.get("/api/book/:id", async(req, res) => {
     try {
         const book = await Book.findById(req.params.id);
         res.status(200).json(book);
@@ -74,16 +74,17 @@ router.get("/book/:id", async(req, res) => {
 });
 
 //get timeline books
-router.get("/book/timeline/all", async(req, res) => {
+router.get("/api/book/timeline/:userId", async(req, res) => {
     try {
-        const currentUser = await User.findById(req.body.userId);
+        const currentUser = await User.findById(req.params.userId);
         const userBooks = await Book.find({ userId: currentUser._id });
         const friendBooks = await Promise.all(
             currentUser.followings.map((friendId) => {
                 return Book.find({ userId: friendId });
             })
         );
-        res.json(userBooks.concat(...friendBooks));
+        res.header("Access-Control-Allow-Origin", "*");
+        res.status(200).json(userBooks.concat(...friendBooks));
     } catch (err) {
         // console.log(err);
         res.status(500).json(err);
