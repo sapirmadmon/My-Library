@@ -5,5 +5,10 @@
     /*height: calc(100vh - 50px);*/
 }
 
+.divRow {
+    display: flex;
+    justify-content: left;
+}
+
 
 /*.feedWrapper {}*/

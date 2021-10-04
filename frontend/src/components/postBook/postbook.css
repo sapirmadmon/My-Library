@@ -1,0 +1,86 @@
+.postBook {
+    width: 33%;
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 1px 7px 0px rgba(0, 0, 0, 0.37);
+    box-shadow: 0px 1px 7px 0px rgba(0, 0, 0, 0.37);
+    margin: 20px 40px 20px 0;
+}
+
+.postBookWrapper {
+    padding: 10px;
+}
+
+.postBookTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.postBookProfileImg {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.postBookUsername {
+    font-size: 15px;
+    font-weight: 500;
+    margin: 0 10px;
+}
+
+.postBookDate {
+    font-size: 12px;
+}
+
+.bookImg {
+    width: 90px;
+    height: 320px;
+}
+
+.postBookCenter {
+    margin: 20px 0;
+}
+
+.bookImg {
+    margin-top: 20px;
+    width: 100%;
+    max-height: 500px;
+    object-fit: contain;
+}
+
+.postBookBottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.postBookBottomLeft {
+    display: flex;
+    align-items: center;
+}
+
+.likeIcon {
+    width: 24px;
+    height: 24px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.postBookLikeCounter {
+    font-size: 13px;
+}
+
+.postBookBottomRight {
+    display: flex;
+    justify-content: right;
+    /*float: right;*/
+    /*margin-left: 40px;*/
+    /*align-content: right;*/
+}
+
+.postBookCommentText {
+    cursor: pointer;
+    border-bottom: 1px dashed gray;
+    font-size: 13px;
+}
