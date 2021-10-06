@@ -29,8 +29,9 @@ router.post("/api/register", async(req, res) => {
 router.post("/api/login", async(req, res) => {
     try {
         const user = await User.findOne({ email: req.body.email });
+
         if (!user) {
-            res.status(404).json("email user not found");
+            return res.status(404).json("email user not found");
         }
 
         const validPassword = await bcrypt.compare(
@@ -38,13 +39,15 @@ router.post("/api/login", async(req, res) => {
             user.password
         );
         if (!validPassword) {
-            res.status(404).json("wrong password!");
+            return res.status(400).json("wrong password!");
         }
+
+        res.header("Access-Control-Allow-Origin", "*");
 
         res.status(200).json(user);
     } catch (err) {
         res.status(500).json(err);
-        console.log(err);
+        //console.log(err);
     }
 });
 

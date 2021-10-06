@@ -1,9 +1,9 @@
 .login {
+    align-items: center;
     width: 100vw;
     height: 100vh;
     background-color: #f0f2f5;
     display: flex;
-    align-items: center;
     justify-content: center;
 }
 
@@ -67,7 +67,7 @@
 
 .loginRegisterButton {
     width: 50%;
-    align-self: center;
+    align-self: center !important;
     height: 40px;
     border-radius: 10px;
     border: none;

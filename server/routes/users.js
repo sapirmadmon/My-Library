@@ -46,9 +46,13 @@ router.delete("/api/user/delete/:id", async(req, res) => {
 });
 
 //get a user
-router.get("/api/user/:id", async(req, res) => {
+router.get("/api/user/", async(req, res) => {
+    const userId = req.query.userId;
+    const userName = req.query.userName;
     try {
-        const user = await User.findById(req.params.id);
+        const user = userId ?
+            await User.findById(userId) :
+            await User.findOne({ userName: userName });
         const { password, updatedAt, ...other } = user._doc;
         res.header("Access-Control-Allow-Origin", "*");
 

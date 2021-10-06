@@ -91,4 +91,18 @@ router.get("/api/book/timeline/:userId", async(req, res) => {
     }
 });
 
+//get user's all books
+router.get("/api/book/profile/:username", async(req, res) => {
+    try {
+        const user = await User.findOne({ userName: req.params.username });
+        const books = await Book.find({ userId: user._id });
+
+        res.header("Access-Control-Allow-Origin", "*");
+        res.status(200).json(books);
+    } catch (err) {
+        // console.log(err);
+        res.status(500).json(err);
+    }
+});
+
 module.exports = router;

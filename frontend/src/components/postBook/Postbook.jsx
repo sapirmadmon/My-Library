@@ -4,6 +4,8 @@ import { format } from "timeago.js";
 import { MoreVert } from "@mui/icons-material";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
+
 export default function Postbook({ postBook }) {
   const [like, setLike] = useState(postBook.likes.length);
   const [isLiked, setIsLiked] = useState(false);
@@ -13,9 +15,7 @@ export default function Postbook({ postBook }) {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await axios.get(
-        `http://localhost:8800/api/user/${postBook.userId}`
-      );
+      const res = await axios.get(`/api/user?userId=${postBook.userId}`);
       console.log(res);
       setUser(res.data);
     };
@@ -31,11 +31,14 @@ export default function Postbook({ postBook }) {
       <div className="postBookWrapper">
         <div className="postBookTop">
           <div className="postBookTopLeft">
-            <img
-              className="postBookProfileImg"
-              src={user.profilePicture || PF + "/person/noAvatar.png"}
-              alt=""
-            />
+            <Link to={`profile/${user.userName}`}>
+              <img
+                className="postBookProfileImg"
+                src={PF + user.profilePicture || PF + "/person/noAvatar.png"}
+                alt=""
+              />
+            </Link>
+
             <span className="postBookUsername">{user.userName}</span>
             <span className="postBookDate">{format(postBook.createdAt)}</span>
           </div>

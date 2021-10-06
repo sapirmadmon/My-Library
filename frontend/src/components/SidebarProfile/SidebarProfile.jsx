@@ -1,16 +1,23 @@
 import "./sidebarProfile.css";
 import { Favorite, Feed, Group } from "@mui/icons-material";
-export default function SidebarProfile() {
+
+export default function SidebarProfile({ user }) {
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">
         <div className="profilePicture">
-          <img className="profileImg" src="/assets/person/3.jpeg" alt="" />
+          <img
+            className="profileImg"
+            src={PF + user.profilePicture || PF + "person/noAvatar.png"}
+            alt=""
+          />
         </div>
         <div className="profileInfo">
-          <h3 className="profileInfoName">sapir_madmon</h3>
-          <span className="profileInfoDesc">hello my friends!</span>
-          <span className="profileInfoCity">Israel, Bat-Yam</span>
+          <h3 className="profileInfoName">{user.userName}</h3>
+          <span className="profileInfoDesc">{user.desc}</span>
+          <span className="profileInfoCity">{user.city}</span>
         </div>
 
         <div className="ratingDiv">
