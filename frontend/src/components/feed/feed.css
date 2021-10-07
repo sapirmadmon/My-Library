@@ -5,12 +5,9 @@
     /*height: calc(100vh - 50px);*/
 }
 
-.divRow {
-    display: flex;
-    justify-content: left;
-}
-
 .postsBookDiv {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /*flex-wrap: wrap;
+    flex-direction: row;*/
 }

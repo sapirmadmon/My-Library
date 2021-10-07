@@ -2,16 +2,21 @@ import "./postbook.css";
 import { format } from "timeago.js";
 
 import { MoreVert } from "@mui/icons-material";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function Postbook({ postBook }) {
   const [like, setLike] = useState(postBook.likes.length);
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState({});
-
+  const { user: currentUser } = useContext(AuthContext);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  useEffect(() => {
+    setIsLiked(postBook.likes.includes(currentUser._id));
+  }, [currentUser._id, postBook.likes]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -23,6 +28,11 @@ export default function Postbook({ postBook }) {
   }, [postBook.userId]);
 
   const likeHandler = () => {
+    try {
+      axios.put("/api/book/" + postBook._id + "/like", {
+        userId: currentUser._id,
+      });
+    } catch (err) {}
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   };
@@ -34,7 +44,11 @@ export default function Postbook({ postBook }) {
             <Link to={`profile/${user.userName}`}>
               <img
                 className="postBookProfileImg"
-                src={PF + user.profilePicture || PF + "/person/noAvatar.png"}
+                src={
+                  user.profilePicture
+                    ? PF + user.profilePicture
+                    : PF + "/person/noAvatar.png"
+                }
                 alt=""
               />
             </Link>

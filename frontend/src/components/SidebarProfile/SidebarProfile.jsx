@@ -10,7 +10,11 @@ export default function SidebarProfile({ user }) {
         <div className="profilePicture">
           <img
             className="profileImg"
-            src={PF + user.profilePicture || PF + "person/noAvatar.png"}
+            src={
+              user.profilePicture
+                ? PF + user.profilePicture
+                : PF + "person/noAvatar.png"
+            }
             alt=""
           />
         </div>
