@@ -1,9 +1,53 @@
 import "./sidebarProfile.css";
 import { Favorite, Feed, Group } from "@mui/icons-material";
+import { useContext, useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
+import { Add, Remove } from "@mui/icons-material";
 
 export default function SidebarProfile({ user }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const { user: currentUser, dispatch } = useContext(AuthContext);
+  const [friends, setFriends] = useState([]);
+  const [followed, setFollowed] = useState(
+    currentUser.followings.includes(user?.id)
+  );
 
+  //  useEffect(() => {
+  //    setFollowed(currentUser.followings.includes(user?.id));
+  //  }, [currentUser, user.id]);
+
+  useEffect(() => {
+    const getFriends = async () => {
+      try {
+        const friendList = await axios.get("/api/friends/" + user._id);
+        setFriends(friendList.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getFriends();
+  }, [user]);
+
+  const handleClick = async () => {
+    try {
+      if (followed) {
+        await axios.put("/api/user/" + user._id + "/unfollow", {
+          userId: currentUser._id,
+        });
+        dispatch({ type: "UNFOLLOW", payload: user._id });
+      } else {
+        await axios.put("/api/user/" + user._id + "/follow", {
+          userId: currentUser._id,
+        });
+        dispatch({ type: "FOLLOW", payload: user._id });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    setFollowed(!followed);
+  };
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">
@@ -31,6 +75,14 @@ export default function SidebarProfile({ user }) {
             alt=""
           />
         </div>
+        <div className="followButtonDiv">
+          {user.userName != currentUser.userName && (
+            <button className="followButton" onClick={handleClick}>
+              {followed ? "Unfollow" : "Follow"}
+              {followed ? <Remove /> : <Add />}
+            </button>
+          )}
+        </div>
         <ul className="sidebarList">
           <li className="sidebarListItem">
             <Favorite htmlColor="red" className="sidebarIcon"></Favorite>
@@ -45,30 +97,25 @@ export default function SidebarProfile({ user }) {
         <hr className="sidebarHr"></hr>
         <h4 className="followingTitle">Following</h4>
         <div className="sidebarFollowings">
-          <div className="followingDiv">
-            <img className="followingImg" src="/assets/person/4.jpeg" alt="" />
-            <span className="followingName">John Carter</span>
-          </div>
-          <div className="followingDiv">
-            <img className="followingImg" src="/assets/person/5.jpeg" alt="" />
-            <span className="followingName">John Carter</span>
-          </div>
-          <div className="followingDiv">
-            <img className="followingImg" src="/assets/person/6.jpeg" alt="" />
-            <span className="followingName">John Carter</span>
-          </div>
-          <div className="followingDiv">
-            <img className="followingImg" src="/assets/person/7.jpeg" alt="" />
-            <span className="followingName">John Carter</span>
-          </div>
-          <div className="followingDiv">
-            <img className="followingImg" src="/assets/person/8.jpeg" alt="" />
-            <span className="followingName">John Carter</span>
-          </div>
-          <div className="followingDiv">
-            <img className="followingImg" src="/assets/person/9.jpeg" alt="" />
-            <span className="followingName">John Carter</span>
-          </div>
+          {friends.map((friend) => (
+            <Link
+              to={"/profile/" + friend.userName}
+              style={{ textDecoration: "none" }}
+            >
+              <div className="followingDiv">
+                <img
+                  className="followingImg"
+                  src={
+                    friend.profilePicture
+                      ? PF + friend.profilePicture
+                      : PF + "person/noAvatar.png"
+                  }
+                  alt=""
+                />
+                <span className="followingName">{friend.userName}</span>
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
     </div>

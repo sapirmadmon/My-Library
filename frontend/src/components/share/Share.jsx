@@ -1,5 +1,5 @@
 import "./share.css";
-import { PhotoLibrary, Stars } from "@mui/icons-material";
+import { Cancel, PhotoLibrary, Stars } from "@mui/icons-material";
 import { useState, useContext, useRef } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
@@ -70,7 +70,12 @@ export default function Share() {
           />
         </div>
         <hr className="shareHr" />
-
+        {file && (
+          <div className="shareImgContainer">
+            <img src={URL.createObjectURL(file)} className="shareImg" alt="" />
+            <Cancel className="shareCancelImg" onClick={() => setFile(null)} />
+          </div>
+        )}
         <form className="shareBottom" onSubmit={submitHandler}>
           <div className="shareOptions">
             <label htmlFor="file" className="option">

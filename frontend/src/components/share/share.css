@@ -1,6 +1,6 @@
 .share {
     width: 96%;
-    height: 210px;
+    /*height: 210px;*/
     border-radius: 10px;
     -webkit-box-shadow: 0px 1px 7px 0px rgba(0, 0, 0, 0.37);
     box-shadow: 0px 1px 7px 0px rgba(0, 0, 0, 0.37);
@@ -99,4 +99,23 @@
     margin-right: 20px;
     cursor: pointer;
     color: white;
+}
+
+.shareImgContainer {
+    padding: 0 20px 10px 20px;
+    position: relative;
+}
+
+.shareImg {
+    width: 15%;
+    height: 15%;
+    object-fit: cover;
+}
+
+.shareCancelImg {
+    position: absolute;
+    top: 0;
+    right: 20px;
+    cursor: pointer;
+    opacity: 0.7;
 }
