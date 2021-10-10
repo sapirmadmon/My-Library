@@ -57,7 +57,9 @@ export default function Postbook({ postBook }) {
             <span className="postBookDate">{format(postBook.createdAt)}</span>
           </div>
           <div className="postBookTopRight">
-            <MoreVert></MoreVert>
+            <Link to={`book/${postBook._id}`}>
+              <MoreVert></MoreVert>
+            </Link>
           </div>
         </div>
         <div className="postBookCenter">
@@ -75,13 +77,13 @@ export default function Postbook({ postBook }) {
             <img
               className="likeIcon"
               src={PF + "heart.png"}
-              onClick={likeHandler}
+              //  onClick={likeHandler}
               alt=""
             />
             <span className="postBookLikeCounter">{like} people like it</span>
           </div>
           <div className="postBookBottomRight">
-            <span className="postBookCommentText">9 comments</span>
+            {/*<span className="postBookCommentText">9 comments</span>*/}
           </div>
         </div>
       </div>

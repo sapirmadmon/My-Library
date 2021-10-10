@@ -25,10 +25,18 @@ export default function Topbar() {
         </div>
       </div>
       <div className="topbarRight">
-        {/*<div className="topbarLinks">
-          <span className="topbarLink">Home page</span>
-          <span className="topbarLink">Timeline</span>
-        </div>*/}
+        <div className="topbarLinks">
+          <span
+            className="topbarLink"
+            onClick={() => {
+              localStorage.clear();
+              window.location.reload();
+            }}
+          >
+            Logout
+          </span>
+          {/*<span className="topbarLink">Timeline</span>*/}
+        </div>
         <div className="topbarIcons">
           <div className="topbarIconItem">
             <Person />

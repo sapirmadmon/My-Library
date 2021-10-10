@@ -1,0 +1,67 @@
+.showBook {
+    flex: 7;
+    /*height: 210px;*/
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 1px 7px 0px rgba(0, 0, 0, 0.37);
+    box-shadow: 0px 1px 7px 0px rgba(0, 0, 0, 0.37);
+}
+
+.showBookWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.showLeft {
+    flex: 7;
+    margin: 10px;
+}
+
+.showRight {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    align-items: center;
+}
+
+.showTop {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.showCenter {
+    display: flex;
+    flex-direction: column;
+}
+
+.showBottom {
+    display: flex;
+    /*align-items: center;*/
+}
+
+.showImg {
+    width: 300px;
+    height: 400px;
+}
+
+.divRating {
+    padding-right: 5px;
+}
+
+.rating {
+    width: 150px;
+    height: 40px;
+}
+
+.showLikes {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.countLikes {
+    font-size: 15px;
+}

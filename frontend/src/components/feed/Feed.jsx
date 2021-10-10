@@ -32,18 +32,6 @@ export default function Feed({ userName }) {
             <Postbook key={p._id} postBook={p} />
           ))}
         </div>
-
-        {/*<div className="divRow">
-          <Postbook></Postbook>
-          <Postbook></Postbook>
-          <Postbook></Postbook>
-        </div>
-        <div className="divRow">
-          <Postbook></Postbook>
-          <Postbook></Postbook>
-
-          <Postbook></Postbook>
-        </div>*/}
       </div>
     </div>
   );

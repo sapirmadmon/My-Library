@@ -67,6 +67,8 @@ router.put("/api/book/:id/like", async(req, res) => {
 router.get("/api/book/:id", async(req, res) => {
     try {
         const book = await Book.findById(req.params.id);
+        res.header("Access-Control-Allow-Origin", "*");
+
         res.status(200).json(book);
     } catch (err) {
         res.status(500).json(err);

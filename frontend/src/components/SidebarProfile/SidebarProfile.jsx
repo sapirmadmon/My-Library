@@ -1,5 +1,5 @@
 import "./sidebarProfile.css";
-import { Favorite, Feed, Group } from "@mui/icons-material";
+import { Favorite, Group } from "@mui/icons-material";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -11,12 +11,12 @@ export default function SidebarProfile({ user }) {
   const { user: currentUser, dispatch } = useContext(AuthContext);
   const [friends, setFriends] = useState([]);
   const [followed, setFollowed] = useState(
-    currentUser.followings.includes(user?.id)
+    currentUser.followings.includes(user?._id)
   );
 
-  //  useEffect(() => {
-  //    setFollowed(currentUser.followings.includes(user?.id));
-  //  }, [currentUser, user.id]);
+  useEffect(() => {
+    setFollowed(currentUser.followings.includes(user?._id));
+  }, [currentUser, user._id]);
 
   useEffect(() => {
     const getFriends = async () => {
@@ -43,10 +43,10 @@ export default function SidebarProfile({ user }) {
         });
         dispatch({ type: "FOLLOW", payload: user._id });
       }
+      setFollowed(!followed);
     } catch (err) {
       console.log(err);
     }
-    setFollowed(!followed);
   };
   return (
     <div className="sidebar">
@@ -69,14 +69,10 @@ export default function SidebarProfile({ user }) {
         </div>
 
         <div className="ratingDiv">
-          <img
-            className="ratingUserImg"
-            src="/assets/ratings/rating5.jpg"
-            alt=""
-          />
+          <img className="ratingUserImg" src="/assets/ratings/5.jpg" alt="" />
         </div>
         <div className="followButtonDiv">
-          {user.userName != currentUser.userName && (
+          {user.userName !== currentUser.userName && (
             <button className="followButton" onClick={handleClick}>
               {followed ? "Unfollow" : "Follow"}
               {followed ? <Remove /> : <Add />}

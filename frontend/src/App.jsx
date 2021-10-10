@@ -10,6 +10,7 @@ import Register from "./pages/register/Register";
 import Profile from "./pages/profile/Profile";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
+import Book from "./pages/book/Book";
 
 function App() {
   //return <Home />;
@@ -19,6 +20,10 @@ function App() {
       <Switch>
         <Route exact path="/">
           {user ? <Home /> : <Register />}
+        </Route>
+
+        <Route exact path="/book/:id">
+          {user ? <Book /> : <Register />}
         </Route>
 
         <Route path="/login">{user ? <Redirect to="/" /> : <Login />}</Route>
