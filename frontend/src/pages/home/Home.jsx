@@ -14,7 +14,6 @@ export default function Home() {
   useEffect(() => {
     const fetchUser = async () => {
       const res = await axios.get(`/api/user?userName=${userName}`);
-      console.log(res);
       setUser(res.data);
     };
     fetchUser();

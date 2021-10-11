@@ -21,7 +21,7 @@ export default function Postbook({ postBook }) {
   useEffect(() => {
     const fetchUser = async () => {
       const res = await axios.get(`/api/user?userId=${postBook.userId}`);
-      console.log(res);
+      //  console.log(res);
       setUser(res.data);
     };
     fetchUser();
@@ -36,6 +36,17 @@ export default function Postbook({ postBook }) {
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   };
+
+  const favoriteHandler = () => {
+    try {
+      axios.put("/api/user/" + postBook._id + "/favorite", {
+        userId: currentUser._id,
+      });
+    } catch (err) {}
+    //setLike(isLiked ? like - 1 : like + 1);
+    //setIsLiked(!isLiked);
+  };
+
   return (
     <div className="postBook">
       <div className="postBookWrapper">
@@ -57,7 +68,7 @@ export default function Postbook({ postBook }) {
             <span className="postBookDate">{format(postBook.createdAt)}</span>
           </div>
           <div className="postBookTopRight">
-            <Link to={`book/${postBook._id}`}>
+            <Link to={`/book/${postBook._id}`}>
               <MoreVert></MoreVert>
             </Link>
           </div>
@@ -77,7 +88,7 @@ export default function Postbook({ postBook }) {
             <img
               className="likeIcon"
               src={PF + "heart.png"}
-              //  onClick={likeHandler}
+              onClick={favoriteHandler}
               alt=""
             />
             <span className="postBookLikeCounter">{like} people like it</span>

@@ -14,7 +14,6 @@ export default function Book() {
   const [postBook, setPostBook] = useState({});
 
   const bookId = useParams().id;
-  console.log("bookId ****" + bookId);
   //const username = useParams().userName;
 
   useEffect(() => {
@@ -28,7 +27,6 @@ export default function Book() {
   useEffect(() => {
     const fetchUser = async () => {
       const res = await axios.get(`/api/book/${bookId}`);
-      console.log("res ************" + res.data);
       setPostBook(res.data);
     };
     fetchUser();

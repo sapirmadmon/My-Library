@@ -2,9 +2,9 @@ import "./sidebar.css";
 import { Favorite, Feed, Group } from "@mui/icons-material";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-//import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
+import { color } from "@mui/system";
 
 export default function Sidebar({ user }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -29,12 +29,22 @@ export default function Sidebar({ user }) {
         <ul className="sidebarList">
           <li className="sidebarListItem">
             <Feed htmlColor="#F19A24" className="sidebarIcon"></Feed>
-            <span className="sidebarListItemText">My Feed</span>
+            <Link
+              to={"/profile/" + currentUser.userName}
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <span className="sidebarListItemText">My Feed</span>
+            </Link>
           </li>
 
           <li className="sidebarListItem">
             <Favorite htmlColor="red" className="sidebarIcon"></Favorite>
-            <span className="sidebarListItemText">Favorites</span>
+            <Link
+              to={"/profile/" + currentUser.userName + "/favorites"}
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <span className="sidebarListItemText">My Favorites</span>
+            </Link>
           </li>
 
           <li className="sidebarListItem">
@@ -49,7 +59,7 @@ export default function Sidebar({ user }) {
           {friends.map((friend) => (
             <Link
               to={"/profile/" + friend.userName}
-              style={{ textDecoration: "none" }}
+              style={{ textDecoration: "none", color: "black" }}
             >
               <div className="sidebarfriend">
                 <img

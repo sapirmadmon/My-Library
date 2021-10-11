@@ -81,8 +81,13 @@ export default function SidebarProfile({ user }) {
         </div>
         <ul className="sidebarList">
           <li className="sidebarListItem">
-            <Favorite htmlColor="red" className="sidebarIcon"></Favorite>
-            <span className="sidebarListItemText">Favorites</span>
+            <Link
+              to={"/profile/" + user.userName + "/favorites"}
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <Favorite htmlColor="red" className="sidebarIcon"></Favorite>
+              <span className="sidebarListItemText">Favorites</span>
+            </Link>
           </li>
 
           <li className="sidebarListItem">

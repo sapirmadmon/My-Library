@@ -2,7 +2,7 @@ const router = require("express").Router();
 const bcrypt = require("bcrypt"); //A library to help you hash passwords
 const status = require("statuses");
 const User = require("../models/User");
-
+const Book = require("../models/Book");
 //update user
 router.put("/api/user/update/:id", async(req, res) => {
     if (req.body.userId == req.params.id) {
@@ -58,6 +58,7 @@ router.get("/api/user/", async(req, res) => {
 
         res.status(200).json(other);
     } catch (err) {
+        console.log(err);
         res.status(500).json(err);
     }
 });
@@ -78,6 +79,28 @@ router.get("/api/friends/:userId", async(req, res) => {
         });
         res.status(200).json(friendList);
     } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+//get favorite books
+router.get("/api/favorites/:userId", async(req, res) => {
+    try {
+        const user = await User.findById(req.params.userId);
+
+        const books = await Promise.all(
+            user.favorites.map((bookId) => {
+                return Book.findById(bookId);
+            })
+        );
+        let bookList = [];
+        books.map((b) => {
+            const book = b;
+            bookList.push(book);
+        });
+        res.status(200).json(bookList);
+    } catch (err) {
+        console.log(err);
         res.status(500).json(err);
     }
 });
@@ -138,8 +161,28 @@ router.put("/api/user/:id/unfollow", async(req, res) => {
         res.status(403).json("you cant unfollow yourself");
     }
 });
-//router.get("/api/users", (req, res) => {
-//    res.send("hey its user route");
-//});
+
+//put a book in favorites
+router.put("/api/user/:id/favorite", async(req, res) => {
+    try {
+        const book = await Book.findById(req.params.id); //which book I want to favorite
+        const currentUser = await User.findById(req.body.userId); //my user
+        if (!currentUser.favorites.includes(req.params.id)) {
+            //if favorites does not include already this book
+            await currentUser.updateOne({
+                $push: { favorites: req.params.id },
+            });
+
+            res.status(200).json("The book has been added to favorites");
+        } else {
+            //else we are already favorite the book
+            res.status(403).json("The book has been already added to favorites");
+        }
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+//TODO - remove book from favorites
 
 module.exports = router;

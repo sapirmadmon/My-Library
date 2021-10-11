@@ -1,0 +1,23 @@
+.favoritesContainer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.title {
+    font-size: 40px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+.favoritesWarrper {
+    /*background-color: tomato;*/
+    height: 80px;
+    width: 90%;
+}
+
+.postsBookDiv {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}

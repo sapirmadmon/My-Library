@@ -34,7 +34,9 @@ export default function ShowBook({ postBook }) {
           <img src={PF + postBook.img} alt="" className="showImg" />
           {/*<div className="showLikes">
             <ThumbUp fontSize="11px" />
-            <span className="countLikes">{postBook.likes.length} people like this</span>
+            <span className="countLikes">
+              {postBook.likes.length} people like this
+            </span>
           </div>*/}
         </div>
       </div>
